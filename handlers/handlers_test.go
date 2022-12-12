@@ -24,4 +24,9 @@ func TestBasic(t *testing.T) {
 	td.CmpNoError(t, err)
 
 	ta.Get(fmt.Sprintf("/profiles?user-id=%d", id)).CmpStatus(http.StatusOK)
+
+	ta.PostJSON("/swipe", json.RawMessage(`{}`)).
+		CmpStatus(http.StatusOK).
+		CmpResponse(td.JSON(`{}`)).
+		OrDumpResponse()
 }

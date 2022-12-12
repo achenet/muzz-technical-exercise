@@ -19,8 +19,7 @@ it is possible to use an ENUM instead of a STRING in the database.
 ## Decisions made
 I used the `math/rand` package instead of the `crypto/rand` package because the former has a simpler API than the latter, and the use case was not security-sensitive.
 
-The function `generateID` returns the number of nanoseconds elapsed since Jan 1 1970. This was chosen as a relatively simple way of generating unique ids that would still be integers.
-There are probably better options however - if the constraint that ID is an integer is relaxed, it is possible to generate a UUID for each user and match.
+The id is generated using the Auto-increment feature of MariaDB.
 
 The database IP was stored in an environment variable, because access is simpler than a file, if more configuration is required however, it would be better to use a simple `config.json` file.
 

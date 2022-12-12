@@ -28,7 +28,7 @@ func NewAPI(db *db.DB) *API {
 
 	})
 	a.GET("/profiles", a.getProfiles)
-	a.POST("/swipe", a.getProfiles)
+	a.POST("/swipe", a.swipe)
 
 	return a
 }
@@ -59,6 +59,12 @@ func (a *API) getProfiles(c echo.Context) error {
 	return c.JSON(http.StatusOK, p)
 }
 
+type SwipeParams struct {
+	UserID     string `json:"user_id"`
+	ProfileID  string `json:"profile_id"`
+	Preference bool   `json:"preference"`
+}
+
 func (a *API) swipe(c echo.Context) error {
 	return nil
 }
@@ -83,10 +89,12 @@ func (a *API) generateRandomProfile(c echo.Context) error {
 	return c.JSON(http.StatusCreated, p)
 }
 
-func randomString(n int) string {
-	return "toto"
-}
+const charset = "abcdefghijklmnopqrstuvwxyz"
 
-func generateID() int {
-	return int(time.Now().UnixNano())
+func randomString(n int) string {
+	b := make([]byte, n)
+	for i := range b {
+		b[i] = charset[rand.Intn(len(charset))]
+	}
+	return string(b)
 }

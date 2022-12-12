@@ -15,7 +15,7 @@ docker rmi muzz-api
 docker build -t muzz-db db/
 docker run -d --name db muzz-db
 
-DB_IP=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' db)
+export DB_IP=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' db)
 
 docker build -t muzz-api .
 docker run -d --name api -e DB_IP=$DB_IP muzz-api
